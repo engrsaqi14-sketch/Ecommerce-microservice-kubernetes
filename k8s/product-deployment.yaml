@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: product-service:v1
+          image: product-service:v2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -26,6 +26,10 @@ spec:
             limits:
               cpu: "500m"
               memory: "256Mi"
+          envFrom:
+            - configMapRef:
+                name: ecommerce-config
+
 
           livenessProbe:
             httpGet:
