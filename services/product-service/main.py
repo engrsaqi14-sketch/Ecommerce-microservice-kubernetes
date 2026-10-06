@@ -30,7 +30,8 @@ products = [
 def health():
     return {
         "status": "healthy",
-        "service": "product-service"
+        "service": "product-service",
+        "version": "v3"
     }
 
 

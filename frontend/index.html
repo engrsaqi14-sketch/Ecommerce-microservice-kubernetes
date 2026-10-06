@@ -1,0 +1,997 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechStore - E-Commerce</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .cart-btn {
+      background: #2563eb !important;
+      padding: 10px 16px;
+      border-radius: 8px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #111827, #2563eb);
+      color: white;
+      padding: 80px 7%;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      padding: 14px 25px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #111827;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .container {
+      width: 86%;
+      max-width: 1200px;
+      margin: 45px auto;
+    }
+
+    .section-title {
+      font-size: 30px;
+      margin-bottom: 25px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      transition: transform 0.2s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-image {
+      height: 180px;
+      background: linear-gradient(135deg, #e5e7eb, #dbeafe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+
+    .product-content {
+      padding: 20px;
+    }
+
+    .product h3 {
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 7px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+      width: 100%;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .cart-item {
+      background: white;
+      padding: 20px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quantity {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .quantity button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #e5e7eb;
+    }
+
+    .summary {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-top: 25px;
+      max-width: 450px;
+      margin-left: auto;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .total {
+      font-size: 24px;
+      font-weight: bold;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+
+    .checkout {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 650px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+    }
+
+    .order {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      margin-top: 70px;
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 15px 4%;
+      }
+
+      nav {
+        gap: 10px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .container {
+        width: 92%;
+      }
+
+      .cart-item {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">TechStore</div>
+
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('productsPage')">Products</button>
+    <button onclick="showPage('ordersPage'); loadOrders()">Orders</button>
+    <button class="cart-btn" onclick="showPage('cartPage'); renderCart()">
+      🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+  </nav>
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+  <div class="hero">
+    <h1>Upgrade Your Tech</h1>
+    <p>Discover premium technology for work, gaming and everyday life.</p>
+    <button onclick="showPage('productsPage')">
+      Shop Products
+    </button>
+  </div>
+
+  <div class="container">
+    <h2 class="section-title">Featured Products</h2>
+    <div id="homeProducts" class="products"></div>
+  </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+<section id="productsPage" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">All Products</h2>
+
+    <div id="products" class="products">
+      Loading products...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CART -->
+<section id="cartPage" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">Shopping Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <div class="summary">
+
+      <div class="summary-row">
+        <span>Items</span>
+        <span id="cartItemsCount">0</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">$0.00</span>
+      </div>
+
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="total">$0.00</span>
+      </div>
+
+      <button class="btn primary" onclick="showPage('checkoutPage')">
+        Proceed to Checkout
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CHECKOUT -->
+<section id="checkoutPage" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">Checkout</h2>
+
+    <div id="checkoutMessage"></div>
+
+    <div class="checkout">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input id="customerName" placeholder="Your name">
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input id="customerEmail" type="email" placeholder="you@example.com">
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <textarea id="customerAddress" rows="4"
+          placeholder="Delivery address"></textarea>
+      </div>
+
+      <button class="btn primary" onclick="placeOrder()">
+        Place Order
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ORDERS -->
+<section id="ordersPage" class="page">
+
+  <div class="container">
+
+    <h2 class="section-title">My Orders</h2>
+
+    <div id="orders">
+      Loading orders...
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer>
+  <p>TechStore E-Commerce Platform</p>
+  <p style="margin-top:8px; opacity:.7;">
+    Powered by Kubernetes • FastAPI • Redis • PostgreSQL
+  </p>
+</footer>
+
+
+<script>
+
+let products = [];
+let cart = [];
+
+
+// -------------------------
+// PAGE NAVIGATION
+// -------------------------
+
+function showPage(pageId) {
+
+  document.querySelectorAll('.page')
+    .forEach(page => page.classList.remove('active'));
+
+  document.getElementById(pageId)
+    .classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+
+// -------------------------
+// LOAD PRODUCTS
+// -------------------------
+
+async function loadProducts() {
+
+  try {
+
+    const response = await fetch('/products');
+
+    if (!response.ok) {
+      throw new Error('Unable to load products');
+    }
+
+    const data = await response.json();
+
+    products = data.products || data;
+
+    renderProducts();
+
+  } catch (error) {
+
+    document.getElementById('products').innerHTML =
+      `<div class="error">
+        Failed to load products.
+      </div>`;
+
+    console.error(error);
+  }
+}
+
+
+// -------------------------
+// RENDER PRODUCTS
+// -------------------------
+
+function renderProducts() {
+
+  const html = products.map(product => {
+
+    let icon = '💻';
+
+    if (product.name.toLowerCase().includes('keyboard')) {
+      icon = '⌨️';
+    }
+
+    if (product.name.toLowerCase().includes('mouse')) {
+      icon = '🖱️';
+    }
+
+    return `
+      <div class="product">
+
+        <div class="product-image">
+          ${icon}
+        </div>
+
+        <div class="product-content">
+
+          <h3>${product.name}</h3>
+
+          <div class="price">
+            $${Number(product.price).toFixed(2)}
+          </div>
+
+          <button
+            class="btn primary"
+            onclick="addToCart(${product.id})">
+
+            Add to Cart
+
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join('');
+
+  document.getElementById('products').innerHTML = html;
+
+  document.getElementById('homeProducts').innerHTML =
+    html;
+}
+
+
+// -------------------------
+// CART
+// -------------------------
+
+function addToCart(productId) {
+
+  const product = products.find(
+    p => p.id === productId
+  );
+
+  if (!product) return;
+
+  const existing = cart.find(
+    item => item.id === productId
+  );
+
+  if (existing) {
+
+    existing.quantity++;
+
+  } else {
+
+    cart.push({
+      ...product,
+      quantity: 1
+    });
+
+  }
+
+  updateCartCount();
+
+  alert(`${product.name} added to cart`);
+}
+
+
+function updateCartCount() {
+
+  const count = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
+  document.getElementById('cartCount')
+    .textContent = count;
+}
+
+
+function renderCart() {
+
+  const container =
+    document.getElementById('cartItems');
+
+  if (cart.length === 0) {
+
+    container.innerHTML = `
+      <div class="checkout">
+        <h3>Your cart is empty</h3>
+        <br>
+        <button class="btn primary"
+          onclick="showPage('productsPage')">
+          Browse Products
+        </button>
+      </div>
+    `;
+
+    updateSummary();
+
+    return;
+  }
+
+
+  container.innerHTML = cart.map(item => `
+
+    <div class="cart-item">
+
+      <div>
+        <h3>${item.name}</h3>
+
+        <p>
+          $${Number(item.price).toFixed(2)}
+        </p>
+      </div>
+
+      <div class="quantity">
+
+        <button onclick="changeQuantity(${item.id}, -1)">
+          -
+        </button>
+
+        <strong>${item.quantity}</strong>
+
+        <button onclick="changeQuantity(${item.id}, 1)">
+          +
+        </button>
+
+        <button
+          class="secondary"
+          onclick="removeFromCart(${item.id})">
+          Remove
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join('');
+
+  updateSummary();
+}
+
+
+function changeQuantity(id, amount) {
+
+  const item = cart.find(
+    product => product.id === id
+  );
+
+  if (!item) return;
+
+  item.quantity += amount;
+
+  if (item.quantity <= 0) {
+    removeFromCart(id);
+    return;
+  }
+
+  renderCart();
+  updateCartCount();
+}
+
+
+function removeFromCart(id) {
+
+  cart = cart.filter(
+    item => item.id !== id
+  );
+
+  renderCart();
+  updateCartCount();
+}
+
+
+function updateSummary() {
+
+  const count = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum + Number(item.price) * item.quantity,
+    0
+  );
+
+  document.getElementById('cartItemsCount')
+    .textContent = count;
+
+  document.getElementById('subtotal')
+    .textContent = `$${total.toFixed(2)}`;
+
+  document.getElementById('total')
+    .textContent = `$${total.toFixed(2)}`;
+}
+
+
+// -------------------------
+// PLACE ORDER
+// -------------------------
+
+async function placeOrder() {
+
+  const name =
+    document.getElementById('customerName').value;
+
+  const email =
+    document.getElementById('customerEmail').value;
+
+  const address =
+    document.getElementById('customerAddress').value;
+
+
+  if (!name || !email || !address) {
+
+    document.getElementById('checkoutMessage').innerHTML =
+      `<div class="error">
+        Please fill all checkout fields.
+      </div>`;
+
+    return;
+  }
+
+
+  if (cart.length === 0) {
+
+    document.getElementById('checkoutMessage').innerHTML =
+      `<div class="error">
+        Your cart is empty.
+      </div>`;
+
+    return;
+  }
+
+
+  /*
+    IMPORTANT:
+
+    This sends the order data to your existing
+    POST /orders endpoint.
+
+    The exact fields depend on your current
+    Order Service implementation.
+  */
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum + Number(item.price) * item.quantity,
+    0
+  );
+
+
+  const orderData = {
+
+    customer_name: name,
+
+    customer_email: email,
+
+    address: address,
+
+    total: total,
+
+    items: cart.map(item => ({
+
+      product_id: item.id,
+
+      product_name: item.name,
+
+      quantity: item.quantity,
+
+      price: item.price
+
+    }))
+
+  };
+
+
+  try {
+
+    const response = await fetch('/orders', {
+
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(orderData)
+
+    });
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        `Order failed: ${response.status}`
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    document.getElementById('checkoutMessage').innerHTML = `
+
+      <div class="success">
+
+        <h3>🎉 Order Placed Successfully!</h3>
+
+        <p style="margin-top:8px;">
+          Your order has been saved successfully.
+        </p>
+
+      </div>
+
+    `;
+
+
+    cart = [];
+
+    updateCartCount();
+
+    renderCart();
+
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerEmail').value = '';
+    document.getElementById('customerAddress').value = '';
+
+
+    console.log('Order response:', result);
+
+
+  } catch (error) {
+
+    document.getElementById('checkoutMessage').innerHTML = `
+
+      <div class="error">
+
+        Order could not be created.
+
+        <br>
+
+        <small>
+          Check the Order Service logs.
+        </small>
+
+      </div>
+
+    `;
+
+    console.error(error);
+  }
+
+}
+
+
+// -------------------------
+// LOAD ORDERS
+// -------------------------
+
+async function loadOrders() {
+
+  const container =
+    document.getElementById('orders');
+
+  container.innerHTML =
+    'Loading orders...';
+
+
+  try {
+
+    const response =
+      await fetch('/orders');
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        'Failed to load orders'
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    const orders =
+      Array.isArray(data)
+        ? data
+        : data.orders || [];
+
+
+    if (orders.length === 0) {
+
+      container.innerHTML = `
+
+        <div class="checkout">
+
+          <h3>No orders yet.</h3>
+
+          <p style="margin-top:10px;">
+            Place your first order from the Products page.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML =
+      orders.map((order, index) => `
+
+        <div class="order">
+
+          <h3>
+            Order #${order.id || index + 1}
+          </h3>
+
+          <br>
+
+          <p>
+            <strong>Customer:</strong>
+            ${order.customer_name || 'Customer'}
+          </p>
+
+          <p style="margin-top:7px;">
+            <strong>Total:</strong>
+            $${Number(order.total || 0).toFixed(2)}
+          </p>
+
+        </div>
+
+      `).join('');
+
+
+  } catch (error) {
+
+    container.innerHTML = `
+
+      <div class="error">
+
+        Could not load orders.
+
+      </div>
+
+    `;
+
+    console.error(error);
+  }
+
+}
+
+
+// -------------------------
+// START APPLICATION
+// -------------------------
+
+loadProducts();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
+```
