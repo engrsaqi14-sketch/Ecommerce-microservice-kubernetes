@@ -1,0 +1,34 @@
+
+name: Ecommerce CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate project structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check required project folders
+        run: |
+          test -d services
+          test -d k8s
+          echo "Project folders found."
+
+      - name: List project files
+        run: |
+          echo "Repository structure:"
+          ls -la
+          echo "Kubernetes manifests:"
+          find k8s -type f
