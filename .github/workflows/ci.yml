@@ -27,13 +27,13 @@ jobs:
       - name: Build Product Service
         run: |
           docker build \
-            -t product-service:test \
+            -t product-service:${IMAGE_TAG} \
             ./services/product-service
 
       - name: Build Order Service
         run: |
           docker build \
-            -t order-service:test \
+            -t order-service:${IMAGE_TAG} \
             ./services/order-service
 
       - name: Log in to GHCR
