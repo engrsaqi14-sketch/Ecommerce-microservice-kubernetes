@@ -7,8 +7,13 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_TAG: latest
+
 permissions:
   contents: read
+  packages: write
 
 jobs:
   docker-build:
@@ -30,3 +35,25 @@ jobs:
           docker build \
             -t order-service:test \
             ./services/order-service
+
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push Product Service
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE="${REGISTRY}/${GITHUB_REPOSITORY_OWNER,,}/product-service"
+          docker tag "product-service:${IMAGE_TAG}" "${IMAGE}:${IMAGE_TAG}"
+          docker push "${IMAGE}:${IMAGE_TAG}"
+
+      - name: Push Order Service
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE="${REGISTRY}/${GITHUB_REPOSITORY_OWNER,,}/order-service"
+          docker tag "order-service:${IMAGE_TAG}" "${IMAGE}:${IMAGE_TAG}"
+          docker push "${IMAGE}:${IMAGE_TAG}"
