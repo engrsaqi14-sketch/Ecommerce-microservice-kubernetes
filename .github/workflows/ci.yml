@@ -1,4 +1,3 @@
-
 name: Ecommerce CI
 
 on:
@@ -12,23 +11,22 @@ permissions:
   contents: read
 
 jobs:
-  validate:
-    name: Validate project structure
+  docker-build:
+    name: Build Docker Images
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check required project folders
+      - name: Build Product Service
         run: |
-          test -d services
-          test -d k8s
-          echo "Project folders found."
+          docker build \
+            -t product-service:test \
+            ./services/product-service
 
-      - name: List project files
+      - name: Build Order Service
         run: |
-          echo "Repository structure:"
-          ls -la
-          echo "Kubernetes manifests:"
-          find k8s -type f
+          docker build \
+            -t order-service:test \
+            ./services/order-service
