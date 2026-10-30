@@ -3,13 +3,23 @@ name: Ecommerce CI
 on:
   push:
     branches: [main]
+    paths:
+      - 'services/**'
+      - 'frontend/**'
+      - 'k8s/**'
+      - '.github/workflows/ci.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'services/**'
+      - 'frontend/**'
+      - 'k8s/**'
+      - '.github/workflows/ci.yml'
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_TAG: latest
+  IMAGE_TAG: ${{ github.sha }}
 
 permissions:
   contents: read
