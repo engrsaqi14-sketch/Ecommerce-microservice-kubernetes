@@ -84,7 +84,7 @@ jobs:
       - name: Deploy Product Service
         run: |
           kubectl set image deployment/product-service \
-            product-service=ghcr.io/engrsaqi14-sketch/product-service:latest \
+            product-service=ghcr.io/engrsaqi14-sketch/product-service:${IMAGE_TAG} \
             -n ecommerce
           kubectl rollout restart deployment/product-service -n ecommerce
           kubectl rollout status deployment/product-service -n ecommerce --timeout=120s
@@ -92,7 +92,7 @@ jobs:
       - name: Deploy Order Service
         run: |
           kubectl set image deployment/order-service \
-            order-service=ghcr.io/engrsaqi14-sketch/order-service:latest \
+            order-service=ghcr.io/engrsaqi14-sketch/order-service:${IMAGE_TAG} \
             -n ecommerce
           kubectl rollout restart deployment/order-service -n ecommerce
           kubectl rollout status deployment/order-service -n ecommerce --timeout=120s
